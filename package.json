@@ -1,0 +1,32 @@
+{
+  "name": "nestjs-standard-decorators-bridge",
+  "version": "0.1.0",
+  "description": "NestJS CLI compiler plugin that generates @Dependencies() constructor-injection metadata under TC39 standard decorators, so NestJS projects can drop experimentalDecorators without losing automatic DI",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "nestjs",
+    "typescript",
+    "decorators",
+    "dependency-injection",
+    "compiler-plugin"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "typescript": ">=5.0.0 <7.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^12.0.0",
+    "reflect-metadata": "^0.2.0",
+    "typescript": "~6.0.2",
+    "vitest": "^5.0.0"
+  }
+}
