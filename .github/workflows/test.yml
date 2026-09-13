@@ -1,0 +1,31 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: test (node ${{ matrix.node-version }}, typescript ${{ matrix.typescript-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["20", "22"]
+        typescript-version: ["5.9.3", "6.0.3"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      # Pin the exact TypeScript version under test -- this plugin's whole
+      # value depends on ts.Program/ts.createProgram staying available
+      # (dropped in TS7), so both ends of the declared peer range
+      # (>=5.0.0 <7.0.0) get a real build + test run, not just whatever
+      # devDependency happens to be installed.
+      - run: npm install --no-save typescript@${{ matrix.typescript-version }}
+      - run: npm run build
+      - run: npm test
